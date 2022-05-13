@@ -1,17 +1,18 @@
-# Weather App using API calls
+# Weather App using API calls from openweather
 # GET response in JSON format
 # turn json into proper format
 # display results
 
 import requests
+import config
 
-API_Key = "0a56b803a8352ea281ff94090bc7c94a"
+# import API_KEY from config
 city = input("Enter a city: ")
 
 # url to get results
 api_url = (
     "https://api.openweathermap.org/data/2.5/weather?appid="
-    + API_Key
+    + config.API_Key
     + "&q="
     + city
     + "&units=metric"

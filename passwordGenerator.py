@@ -62,4 +62,17 @@ def passwordGenerator():
     print("".join(password))
 
 
-passwordGenerator()
+def passwordGen():
+    length = int(input("Length of password: "))
+    while length < 12:
+        print("Minimum length of password is 12")
+        length = int(input("Length of password: "))
+    combination = string.ascii_letters + string.digits + string.punctuation
+    password = "".join(random.sample(combination, length))
+    print("Your password is: " + password)
+
+
+passwordGen()
+
+
+# passwordGenerator()
