@@ -11,13 +11,6 @@ class Moves(IntEnum):
 
 # get user choice
 def getUserMove():
-    # list of moves
-    # moves = ["ROCK", "PAPER", "SCISSORS"]
-    # print("MOVES AVAILABLE")
-    # print(f"1. {moves[0]}")
-    # print(f"2. {moves[1]}")
-    # print(f"{moves[2]}")
-
     # dynamic way of printing
     moves = [f"{move.value}. {move.name}" for move in Moves]
     print("- - - MOVES AVAILABLE - - -")
@@ -51,7 +44,7 @@ def jankenpon(userMove, computerMove):
         print(f"ITS A TIE")
 
     elif userMove == Moves.ROCK:
-        if computerMove == "SCISSORS":
+        if computerMove == Moves.SCISSORS:
             print("YOU WIN!")
             userScore += 1
         else:
@@ -59,7 +52,7 @@ def jankenpon(userMove, computerMove):
             computerScore += 1
 
     elif userMove == Moves.PAPER:
-        if computerMove == "ROCK":
+        if computerMove == Moves.ROCK:
             print("YOU WIN!")
             userScore += 1
         else:
@@ -67,7 +60,7 @@ def jankenpon(userMove, computerMove):
             computerScore += 1
 
     elif userMove == Moves.SCISSORS:
-        if computerMove == "PAPER":
+        if computerMove == Moves.PAPER:
             print("YOU WIN!")
             userScore += 1
         else:

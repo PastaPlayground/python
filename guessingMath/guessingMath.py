@@ -54,14 +54,14 @@ def menuOption(level, count):
         return count
 
     if level == 2:
-        number = random.randint(10, 50)
+        number = random.randint(10, 20)
         problem = "Guess a random number from 10 - 50: "
         userGuess = getUserGuess(problem)
         count = checkGuess(userGuess, number, count)
         return count
 
     if level == 3:
-        number = random.randint(100, 200)
+        number = random.randint(100, 150)
         problem = "Guess a random number from 100 - 200: "
         userGuess = getUserGuess(problem)
         count = checkGuess(userGuess, number, count)
