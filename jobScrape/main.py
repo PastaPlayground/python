@@ -5,10 +5,16 @@
 # change output format from csv to json for clearer view of data
 # create a list of dictionaries to store key values of jobs
 
+# 27/05/22
+# create empty list outside of for loop to prevent looping empty list
+# append the dictionaries into list using a loop
+# create folder to contain all json files
+
+import os
 import requests
 from bs4 import BeautifulSoup
-import csv
 import datetime
+import csv
 import json
 
 
@@ -17,7 +23,6 @@ import json
 
 
 def scrape():
-
     url = f"https://www.linkedin.com/jobs/search?keywords={user_job}&location=Singapore&geoId=102454443&trk=public_jobs_jobs-search-bar_search-submit&currentJobId=3087806252&position=2&pageNum=0"
 
     html = requests.get(url).text
@@ -32,6 +37,9 @@ def scrape():
 
     # get individual data without for loop
     # running for loop to get all data from the page
+
+    # empty list
+    output =[]
     for job in jobs:
         published_date = job.find("time").text.strip()
         matches = ["minutes", "hour", "hours", "day", "days"]
@@ -41,9 +49,7 @@ def scrape():
             job_title = job.find("h3").text.strip()
             job_link = job.a["href"]
 
-            # empty list
-            output = []
-
+            # 1 company data
             # dictionary of key pair value
             data = {
                 "Posted": f"{published_date}",
@@ -51,44 +57,30 @@ def scrape():
                 "Job Title": f"{job_title}",
                 "Link": f"{job_link}",
             }
-            # print(data)
-            # for i in range
 
+            # append all company data into list with for loop
             output.append(data)
-            # print(output)
-            print(json.dumps(output, indent=4))
+            print(len(output))
+            # convert list into json object
+            json_output = json.dumps(output, indent=2)
 
-            try:
-                # export CSV format
-                # with open(f"{user_job}.csv", "a") as fopen:
-                #     csv_writer = csv.writer(fopen)
-                #     data = [
-                #         f"{published_date} \n {company_name} \n {job_title} \n {job_link}"
-                #     ]
+            # open jobs folder and add new json file inside
+            with open(f"{folderName}/{user_job}.json", "w") as fopen:
+                fopen.write(json_output)
 
-                #     csv_writer.writerow(data)
+            # try:
+            # #     # export CSV format
+            # #     with open(f"{user_job}.csv", "a") as fopen:
+            # #         csv_writer = csv.writer(fopen)
+            # #         data = [
+            # #             f"Posted: {published_date} \n Company: {company_name} \n Title: {job_title} \n Link: {job_link}"
+            # #         ]
 
-                # export JSON format
-                # data in dictionary form
+            # #         csv_writer.writerow(data)
 
-                # 1 company data
+            # except:
+            #     return False
 
-                json_data = json.dumps(data, indent=2)
-                # with open(f"{user_job}.json", "a") as fopen:
-
-                #     fopen.write(json_data)
-
-            except:
-                return False
-
-
-# def write_to_csv(list):
-#     try:
-#         with open("Jobs.csv", "a") as fopen:
-#             csv_writer = csv.writer(fopen)
-#             csv_writer.writerow(list)
-#     except:
-#         return False
 
 
 if __name__ == "__main__":
@@ -96,6 +88,14 @@ if __name__ == "__main__":
     now = datetime.datetime.now()
     formatDate = now.strftime("%x")
 
+    # jobScrape absolute path
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+
+    # folder in same path as jobScrape
+    folderName = os.path.join(fileDir, 'jobs')
+
     print(f"Starting job scrape for {user_job} on {formatDate}. . .")
     scrape()
     print(f"Jobs scrape done for {user_job} on LinkedIn")
+else:
+    print("Unsuccessful")
