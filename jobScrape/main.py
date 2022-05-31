@@ -39,7 +39,7 @@ def scrape():
     # running for loop to get all data from the page
 
     # empty list
-    output =[]
+    output = []
     for job in jobs:
         published_date = job.find("time").text.strip()
         matches = ["minutes", "hour", "hours", "day", "days"]
@@ -60,7 +60,6 @@ def scrape():
 
             # append all company data into list with for loop
             output.append(data)
-            print(len(output))
             # convert list into json object
             json_output = json.dumps(output, indent=2)
 
@@ -82,17 +81,16 @@ def scrape():
             #     return False
 
 
-
 if __name__ == "__main__":
     user_job = input("Job title your are looking for: ").replace(" ", "").lower()
     now = datetime.datetime.now()
     formatDate = now.strftime("%x")
 
     # jobScrape absolute path
-    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    fileDir = os.path.dirname(os.path.realpath("__file__"))
 
     # folder in same path as jobScrape
-    folderName = os.path.join(fileDir, 'jobs')
+    folderName = os.path.join(fileDir, "jobs")
 
     print(f"Starting job scrape for {user_job} on {formatDate}. . .")
     scrape()
