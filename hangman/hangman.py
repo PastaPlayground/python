@@ -20,8 +20,12 @@ import string
 # adding lives to limit the amount of guesses
 
 
-def get_valid_word(words):
-    word = random.choice(words)
+def get_valid_word(level, words):
+    filter = []
+    for word in words:
+        if len(word) == level:
+            filter.append(word)
+    word = random.choice(filter)
 
     # if word contains - or space, choose another word
     while "-" in word or " " in word:
@@ -31,8 +35,11 @@ def get_valid_word(words):
 
 
 def hangman():
+
+    level = int(input("choose the number of letters: "))
+
     # get a word
-    word = get_valid_word(words)
+    word = get_valid_word(level, words)
 
     # letters in a word
     # used to keep track what has been guessed
@@ -59,7 +66,8 @@ def hangman():
         # print word with - as letters not guessed
         # show letters that have been guessed
         # W - R D
-        word_list = [letter if letter in used_letters else "-" for letter in word]
+        word_list = [
+            letter if letter in used_letters else "-" for letter in word]
         print("Current word: ", " ".join(word_list))
 
         # get user input
